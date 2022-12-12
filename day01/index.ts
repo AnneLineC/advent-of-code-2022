@@ -70,4 +70,8 @@ const isOnlyOneItem = (input) => input.length === 1;
 // Display answers
 // ---------------
 
-// solveWithLogs(solve1, 1);
+const solve = (): string | number => {
+    return getHighestCaloriesTotal(INPUT);
+};
+
+solveWithLogs(solve, 1);
