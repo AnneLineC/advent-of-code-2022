@@ -28,38 +28,43 @@ export const INPUT = readInput(path.resolve(__dirname, './input.txt'));
 // -------------------
 
 export const getHighestCaloriesTotal = (input: string): number => {
-    const arrayOfStrings = splitInput(input);
-    console.log('arrayOfStrings', arrayOfStrings);
-
-    return calculateHighestAmout(arrayOfStrings);
+    const arrayOfCalories = splitInputIntoCaloriesArray(input);
+    const highestAmountOfCalories = calculateHighestAmout(arrayOfCalories);
+    return highestAmountOfCalories;
 };
 
-const calculateHighestAmout = (input) => {
-    let totalAmountForCurrentElf = 0;
-    let maxAmout = 0;
-    if (input.length === 1) {
-        maxAmout = parseInt(input[0], 10);
-    }
-    input.forEach((calory) => {
-        if (calory) {
-            calory = parseInt(calory, 10);
-            totalAmountForCurrentElf = totalAmountForCurrentElf + calory;
-        } else {
-            console.log('no calory');
-            if (totalAmountForCurrentElf > maxAmout) {
-                maxAmout = totalAmountForCurrentElf;
-            }
-            totalAmountForCurrentElf = 0;
-        }
-    });
-    return maxAmout;
-};
-
-const splitInput = (input: string): string[] => {
+const splitInputIntoCaloriesArray = (input: string): string[] => {
     const splittedInput = input.split('\n');
     const inputWithNoInnerSpaces = splittedInput.map((item) => item.trim());
     return inputWithNoInnerSpaces;
 };
+
+const calculateHighestAmout = (input) => {
+    let maxAmoutOfCalories = 0;
+    let totalAmountForCurrentElf = 0;
+
+    if (isOnlyOneItem(input)) {
+        maxAmoutOfCalories = getStringIntoNumber(input[0]);
+        return maxAmoutOfCalories;
+    }
+
+    input.forEach((calory) => {
+        if (calory) {
+            calory = getStringIntoNumber(calory);
+            totalAmountForCurrentElf = totalAmountForCurrentElf + calory;
+        } else {
+            if (totalAmountForCurrentElf > maxAmoutOfCalories) {
+                maxAmoutOfCalories = totalAmountForCurrentElf;
+            }
+            totalAmountForCurrentElf = 0;
+        }
+    });
+    return maxAmoutOfCalories;
+};
+
+const getStringIntoNumber = (item: string): number => parseInt(item, 10);
+
+const isOnlyOneItem = (input) => input.length === 1;
 
 // ---------------
 // Display answers
