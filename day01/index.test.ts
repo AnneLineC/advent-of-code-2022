@@ -1,7 +1,22 @@
-import { TEST_INPUT } from './index';
+import { getHighestCaloriesTotal, TEST_INPUT } from './index';
 
-describe('Unit tests', () => {
-    it('Runs test correctly', () => {
-        expect(TEST_INPUT).toBe(TEST_INPUT);
+describe('Total calories carried by the elves', () => {
+    it('If there is only one elf with one ingredient, we get that one', () => {
+        const input = `1000`;
+
+        const result = getHighestCaloriesTotal(input);
+
+        expect(result).toBe(1000);
+    });
+
+    it('If there are two elves with one ingredient each, we get the highest one', () => {
+        const input = `1000
+
+        2000
+        `;
+
+        const result = getHighestCaloriesTotal(input);
+
+        expect(result).toBe(2000);
     });
 });

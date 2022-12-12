@@ -27,6 +27,34 @@ export const INPUT = readInput(path.resolve(__dirname, './input.txt'));
 // Your functions here
 // -------------------
 
+export const getHighestCaloriesTotal = (input: string): number => {
+    const arrayOfStrings = splitInput(input);
+    const arrayOfStringsWithoutEmptyStrings = removesEmptyStringsFromArray(arrayOfStrings);
+    const arrayOfNumbersInput = convertArrayOfStringsToArrayOfNumbers(arrayOfStringsWithoutEmptyStrings);
+    const higherAmount = getHigherAmount(arrayOfNumbersInput);
+    return higherAmount;
+};
+
+const splitInput = (input: string): string[] => {
+    const splittedInput = input.split(/\s+/);
+    return splittedInput;
+};
+
+const removesEmptyStringsFromArray = (input: string[]): string[] => {
+    const arrayWithoutEmptyStrings = input.filter((item) => /\S/.test(item));
+    return arrayWithoutEmptyStrings;
+};
+
+const convertArrayOfStringsToArrayOfNumbers = (input: string[]): number[] => {
+    const arrayOfNumbers = input.map((item) => parseInt(item, 10));
+    return arrayOfNumbers;
+};
+
+const getHigherAmount = (input: number[]): number => {
+    const higherAmount = Math.max(...input);
+    return higherAmount;
+};
+
 // -------------
 // Solve problem
 // -------------
