@@ -1,6 +1,6 @@
-import { getHighestCaloriesTotal, TEST_INPUT } from './index';
+import { getHighestCaloriesTotal, getThreeHighestCaloriesSum, TEST_INPUT } from './index';
 
-describe('Total calories carried by the elves', () => {
+describe('Total max calories carried by one elf', () => {
     it('If there is only one elf with one ingredient, we get that one', () => {
         const input = `1000`;
 
@@ -37,5 +37,13 @@ describe('Total calories carried by the elves', () => {
         const result = getHighestCaloriesTotal(TEST_INPUT);
 
         expect(result).toBe(24000);
+    });
+});
+
+describe('Total max calories carried by three elves', () => {
+    it('If there are several elves with more than one ingredient each, we get the sum of the highest calories carried by the three elves', () => {
+        const result = getThreeHighestCaloriesSum(TEST_INPUT);
+
+        expect(result).toBe(45000);
     });
 });

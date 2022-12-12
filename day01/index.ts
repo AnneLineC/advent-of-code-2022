@@ -39,7 +39,7 @@ const splitInputIntoCaloriesArray = (input: string): string[] => {
     return inputWithNoInnerSpaces;
 };
 
-const calculateHighestAmout = (input) => {
+const calculateHighestAmout = (input: string[]): number => {
     let maxAmoutOfCalories = 0;
     let totalAmountForCurrentElf = 0;
 
@@ -50,8 +50,8 @@ const calculateHighestAmout = (input) => {
 
     input.forEach((calory) => {
         if (calory) {
-            calory = getStringIntoNumber(calory);
-            totalAmountForCurrentElf = totalAmountForCurrentElf + calory;
+            const caloryInt = getStringIntoNumber(calory);
+            totalAmountForCurrentElf = totalAmountForCurrentElf + caloryInt;
         } else {
             if (totalAmountForCurrentElf > maxAmoutOfCalories) {
                 maxAmoutOfCalories = totalAmountForCurrentElf;
@@ -64,14 +64,59 @@ const calculateHighestAmout = (input) => {
 
 const getStringIntoNumber = (item: string): number => parseInt(item, 10);
 
-const isOnlyOneItem = (input) => input.length === 1;
+const isOnlyOneItem = (input: any[]) => input.length === 1;
+
+// ---------------
+// Three elves
+// ---------------
+
+export const getThreeHighestCaloriesSum = (input: string): number => {
+    const arrayOfCalories = splitInputIntoCaloriesArray(input);
+    const highestAmountOfCalories = calculateThreeHightestCaloriesSum(arrayOfCalories);
+    return highestAmountOfCalories;
+};
+
+const calculateThreeHightestCaloriesSum = (input: string[]): number => {
+    let maxThreeAmoutsOfCalories = [0, 0, 0];
+    let totalAmountForCurrentElf = 0;
+
+    for (let i = 0; i < maxThreeAmoutsOfCalories.length; i++) {
+        input.forEach((calory, index) => {
+            if (calory) {
+                const caloryInt = getStringIntoNumber(calory);
+                totalAmountForCurrentElf = totalAmountForCurrentElf + caloryInt;
+            } else {
+                if (
+                    totalAmountForCurrentElf > maxThreeAmoutsOfCalories[i] &&
+                    !maxThreeAmoutsOfCalories.includes(totalAmountForCurrentElf)
+                ) {
+                    maxThreeAmoutsOfCalories[i] = totalAmountForCurrentElf;
+                }
+                totalAmountForCurrentElf = 0;
+            }
+
+            if (index === input.length - 1) {
+                totalAmountForCurrentElf = 0;
+            }
+        });
+    }
+
+    const totalNumberOfCalories = maxThreeAmoutsOfCalories.reduce((sum, value) => sum + value);
+
+    return totalNumberOfCalories;
+};
 
 // ---------------
 // Display answers
 // ---------------
 
-const solve = (): string | number => {
+const solve1 = (): string | number => {
     return getHighestCaloriesTotal(INPUT);
 };
 
-solveWithLogs(solve, 1);
+const solve2 = (): string | number => {
+    return getThreeHighestCaloriesSum(INPUT);
+};
+
+solveWithLogs(solve1, 1);
+solveWithLogs(solve2, 2);
