@@ -29,39 +29,37 @@ export const INPUT = readInput(path.resolve(__dirname, './input.txt'));
 
 export const getHighestCaloriesTotal = (input: string): number => {
     const arrayOfStrings = splitInput(input);
-    const arrayOfStringsWithoutEmptyStrings = removesEmptyStringsFromArray(arrayOfStrings);
-    const arrayOfNumbersInput = convertArrayOfStringsToArrayOfNumbers(arrayOfStringsWithoutEmptyStrings);
-    const higherAmount = getHigherAmount(arrayOfNumbersInput);
-    return higherAmount;
+    console.log('arrayOfStrings', arrayOfStrings);
+
+    return calculateHighestAmout(arrayOfStrings);
+};
+
+const calculateHighestAmout = (input) => {
+    let totalAmountForCurrentElf = 0;
+    let maxAmout = 0;
+    if (input.length === 1) {
+        maxAmout = parseInt(input[0], 10);
+    }
+    input.forEach((calory) => {
+        if (calory) {
+            calory = parseInt(calory, 10);
+            totalAmountForCurrentElf = totalAmountForCurrentElf + calory;
+        } else {
+            console.log('no calory');
+            if (totalAmountForCurrentElf > maxAmout) {
+                maxAmout = totalAmountForCurrentElf;
+            }
+            totalAmountForCurrentElf = 0;
+        }
+    });
+    return maxAmout;
 };
 
 const splitInput = (input: string): string[] => {
-    const splittedInput = input.split(/\s+/);
-    return splittedInput;
+    const splittedInput = input.split('\n');
+    const inputWithNoInnerSpaces = splittedInput.map((item) => item.trim());
+    return inputWithNoInnerSpaces;
 };
-
-const removesEmptyStringsFromArray = (input: string[]): string[] => {
-    const arrayWithoutEmptyStrings = input.filter((item) => /\S/.test(item));
-    return arrayWithoutEmptyStrings;
-};
-
-const convertArrayOfStringsToArrayOfNumbers = (input: string[]): number[] => {
-    const arrayOfNumbers = input.map((item) => parseInt(item, 10));
-    return arrayOfNumbers;
-};
-
-const getHigherAmount = (input: number[]): number => {
-    const higherAmount = Math.max(...input);
-    return higherAmount;
-};
-
-// -------------
-// Solve problem
-// -------------
-
-// const solve1 = (): string | number => {
-//     return computeMaxCalories2(INPUT);
-// };
 
 // ---------------
 // Display answers
